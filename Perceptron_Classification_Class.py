@@ -27,7 +27,7 @@ class Percepton:
             self.b += lr * e
 
             Y_pred = np.matmul(self.X_train, self.w) + self.b
-            error = np.mean(np.abs(self.X_train - Y_pred))
+            error = np.mean(np.abs(self.Y_train - Y_pred))
             Error.append(error)
 
             ax.clear()
