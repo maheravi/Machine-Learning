@@ -66,7 +66,7 @@ class Percepton:
         error = np.mean(np.abs(Y_test - predic))
         return error, accuracy
 
-    def pltlost(self, X_test, Y_test):
+    def pltlost(self):
         x = np.arange(0, X_test.shape[0])
         plt.plot(x, self.Error, marker='o')
         plt.show()
@@ -90,4 +90,4 @@ EvalTrain, Accuracy = p.evaluate(X_train, Y_train)
 print('Train Data Evaluation: ', EvalTrain, 'Train Data Accuracy: ', Accuracy)
 EvalTest, Accuracy = p.evaluate(X_test, Y_test)
 print('Test Data Evaluation: ', EvalTest, 'Test Data Accuracy: ', Accuracy)
-p.pltlost(X_train, Y_train)
+p.pltlost()
