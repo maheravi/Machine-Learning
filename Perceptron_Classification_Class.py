@@ -67,7 +67,7 @@ class Percepton:
         return error, accuracy
 
     def pltlost(self):
-        x = np.arange(0, X_test.shape[0])
+        x = np.arange(0, self.X_train.shape[0])
         plt.plot(x, self.Error, marker='o')
         plt.show()
 
