@@ -18,17 +18,18 @@ class Percepton:
         lr = 0.01
         self.w = np.random.rand(2, 1)
         self.b = np.random.rand(1, 1)
-        Error = []
+        self.Error = []
         for i in range(self.X_train.shape[0]):
             y_pred = np.matmul(self.X_train[i], self.w) + self.b
             e = self.Y_train[i] - y_pred
 
-            self.w += lr * self.X_train[i, :].T * e
-            self.b += lr * e
+            update = lr * e
+            self.w += self.X_train[i, :].T * update
+            self.b += update
 
             Y_pred = np.matmul(self.X_train, self.w) + self.b
             error = np.mean(np.abs(self.Y_train - Y_pred))
-            Error.append(error)
+            self.Error.append(error)
 
             ax.clear()
             z = self.w[0] * x + self.w[1] * y + self.b
@@ -41,7 +42,7 @@ class Percepton:
             plt.pause(0.1)
         plt.show()
 
-        return Error, self.w, self.b
+        return self.Error, self.w, self.b
 
     def predict(self, X_test):
         Y_pred = np.matmul(X_test, self.w) + self.b
@@ -66,10 +67,8 @@ class Percepton:
         return error, accuracy
 
     def pltlost(self, X_test, Y_test):
-        error = self.fit(X_test, Y_test)
-        error = np.array(error[0])
         x = np.arange(0, X_test.shape[0])
-        plt.plot(x, error, marker='o')
+        plt.plot(x, self.Error, marker='o')
         plt.show()
 
 
@@ -83,12 +82,10 @@ Y_test = np.array(data2.iloc[:, 2])
 
 fig = plt.figure()
 ax = fig.add_subplot(projection='3d')
-ax.view_init(-140, 60)
 
 p = Percepton()
 Error, w, b = p.fit(X_train, Y_train)
 prediction = p.predict(X_train)
-# print(prediction)
 EvalTrain, Accuracy = p.evaluate(X_train, Y_train)
 print('Train Data Evaluation: ', EvalTrain, 'Train Data Accuracy: ', Accuracy)
 EvalTest, Accuracy = p.evaluate(X_test, Y_test)
